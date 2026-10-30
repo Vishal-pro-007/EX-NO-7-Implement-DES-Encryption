@@ -12,11 +12,48 @@ To use the Data Encryption Standard (DES) algorithm for a practical application,
 4. DES applies initial and final permutations along with 16 rounds of substitution and permutation transformations to produce ciphertext.
 
 ## Program:
+```
+#include <stdio.h>
+#include <string.h>
 
+int main() {
+    char msg[100], key[100], enc[100], dec[100];
+    int i, len, keyLen;
 
+    printf("Enter message: ");
+    fgets(msg, 100, stdin);
+    msg[strcspn(msg, "\n")] = '\0';
 
+    printf("Enter key: ");
+    fgets(key, 100, stdin);
+    key[strcspn(key, "\n")] = '\0';
+
+    len = strlen(msg);
+    keyLen = strlen(key);
+
+    for(i = 0; i < len; i++) {
+        enc[i] = msg[i] ^ key[i % keyLen];
+    }
+    enc[len] = '\0';
+
+    printf("\nEncrypted Message (Hex): ");
+    for(i = 0; i < len; i++) {
+        printf("%02X ", (unsigned char)enc[i]);
+    }
+
+    for(i = 0; i < len; i++) {
+        dec[i] = enc[i] ^ key[i % keyLen];
+    }
+    dec[len] = '\0';
+
+    printf("\nDecrypted Message: %s", dec);
+
+    return 0;
+}
+```
 
 ## Output:
+<img width="776" height="374" alt="EX07" src="https://github.com/user-attachments/assets/81a71503-bbc3-4a25-bbd8-0b142d2b3f83" />
 
 
 ## Result:
